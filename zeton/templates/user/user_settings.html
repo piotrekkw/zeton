@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col col-sm-6">
+    {% include "base/user_basic_data.html" %}
+    <form>
+        <h2>Ustawienia:</h2>
+
+        <form>
+            <div class="form-group button">
+
+                <a class="btn btn-info" href="/settings/password">Zmiana hasła</a>
+                <a class="btn btn-info" href="/settings/firstname">Zmiana imienia</a>
+
+            </div>
+        </form>
+
+        <br/>
+        <br/>
+
+
+        <form>
+            <div class="form-group button">
+
+                <a class="btn btn-info" href="/">Strona główna</a>
+
+                <a class="btn btn-info" href="/logout">Wyloguj</a>
+
+            </div>
+        </form>
+
+    </form>
+</div>
+
+
+{% endblock %}

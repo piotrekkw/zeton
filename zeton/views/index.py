@@ -3,7 +3,7 @@ from zeton.views import bp
 from flask import render_template, g, get_flashed_messages, abort
 
 from zeton import auth
-from zeton.data_access import users, prizes, tasks, points
+from zeton.data_access import users, prizes, tasks, points, bans
 
 
 @bp.route('/')
@@ -17,7 +17,7 @@ def index():
 
     if role == 'caregiver':
         children = users.get_caregivers_children(logged_user_id)
-        template = 'index_caregiver.html'
+        template = 'base/index_caregiver.html'
 
         context.update({"firstname": g.user_data['firstname'],
                         "role": role,
@@ -25,7 +25,7 @@ def index():
 
     elif role == 'child':
 
-        template = 'index_child.html'
+        template = 'base/index_child.html'
         child = users.get_child_data(logged_user_id)
         child_points = points.get_child_points(child['id'])
         childs_tasks = tasks.get_tasks(logged_user_id)
@@ -33,7 +33,8 @@ def index():
         context = {'child': child,
                    'child_points': child_points,
                    'childs_tasks': childs_tasks,
-                   'childs_prizes': childs_prizes}
+                   'childs_prizes': childs_prizes,
+                   'firstname': g.user_data['firstname']}
 
     messages = get_flashed_messages()
 
@@ -49,16 +50,22 @@ def child(child_id):
     childs_prizes = prizes.get_prizes(child_id)
     role = g.user_data['role']
     child_points = points.get_child_points(child['id'])
+    info = bans.get_most_important_warn_ban(child_id).split(';')
+    info_str = info[0]
+    info_bck = info[1]
 
     context = {'child': child,
                'childs_tasks': childs_tasks,
                'childs_prizes': childs_prizes,
                'role': role,
-               'child_points': child_points}
+               'child_points': child_points,
+               'info_str': info_str,
+               'info_bck': info_bck,
+               "firstname": g.user_data['firstname']}
 
     messages = get_flashed_messages()
 
-    return render_template('caregiver_panel.html', **context, messages=messages)
+    return render_template('base/index_child.html', **context, messages=messages)
 
 
 @bp.route('/assign/<child_id>/add_caregiver_to_child')
@@ -78,4 +85,4 @@ def add_caregiver_to_child(child_id):
 
     messages = get_flashed_messages()
 
-    return render_template('add_caregiver_to_child.html', **context, messages=messages)
+    return render_template('user/add_caregiver_to_child.html', **context, messages=messages)

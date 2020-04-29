@@ -6,19 +6,22 @@ VALUES (1,
         'pbkdf2:sha256:150000$3YLzOKDd$2e1d50b8fc485efa0ee45fb20d15158712aab90538d3577e31b3dadf0fa0cf7d',
         'caregiver',
         'Pafnucy',
-        NULL);
+        NULL,
+        'caregiver@example.com');
 INSERT INTO users
 VALUES (2,
         'child_login',
         'pbkdf2:sha256:150000$nbHPlxsT$5cad215cd4d5f0a5da6af2ebf3df8102decfe8e34fb0c651a34c69819e2e7cb5',
         'child',
         'Bonifacy',
-        NULL);
+        NULL,
+        'child@example.com');
 
 
 INSERT INTO main_points
 VALUES(1,
        2,
+       0,
        0,
        0,
        0,
@@ -58,15 +61,15 @@ INSERT INTO home_points
 VALUES (8, 2, 'pomoc ślepej sąsiadce', 20, 1, 7, 0);
 
 INSERT INTO prizes
-VALUES (1, 2, '1 min komputer', 1, 30, 180, 720);
+VALUES (1, 2, '1 min komputer', 1, 30, 180, 720, 1);
 INSERT INTO prizes
-VALUES (2, 2, 'cola (200ml)', 20, 1, 1, 4);
+VALUES (2, 2, 'cola (200ml)', 20, 1, 1, 4, 1);
 INSERT INTO prizes
-VALUES (3, 2, 'zakupy w żabce (bez chipsów i Coca Coli)', 60, 1, 1, 4);
+VALUES (3, 2, 'zakupy w żabce (bez chipsów i Coca Coli)', 60, 1, 1, 4, 1);
 INSERT INTO prizes
-VALUES (4, 2, 'kino domowe', 100, 1, 2, 8);
+VALUES (4, 2, 'kino domowe', 100, 1, 2, 8, 1);
 INSERT INTO prizes
-VALUES (5, 2, 'piżama party', 100, 1, 2, 8);
+VALUES (5, 2, 'piżama party', 100, 1, 2, 8, 1);
 
 CREATE TRIGGER add_new_child_main_points  AFTER INSERT ON users for each row when new.role = 'child'
     begin

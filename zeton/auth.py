@@ -33,7 +33,7 @@ def password_validation(password):
 def login():
     error = None
     if request.method == 'POST':
-        login = request.form['login']
+        login = request.form['login'].lower()
         password = request.form['password']
 
         user_data = get_user_data(login)
@@ -48,7 +48,7 @@ def login():
                 return redirect(url_for('views.index'))
 
         error = 'Invalid login or username'
-    return render_template('login.html', error=error)
+    return render_template('base/login.html', error=error)
 
 
 @bp.route('/logout')
@@ -59,14 +59,18 @@ def logout():
 
 @bp.route('/register', methods=['GET'])
 def register():
+    # redirects already logged in user to the index view
+    users.load_logged_in_user_data()
+    if g.user_data:
+        return redirect(url_for('views.index'))
     prev_url = request.referrer
-    return render_template('register_form.html', prev_url=prev_url)
+    return render_template('user/register_form.html', prev_url=prev_url)
 
 
 @bp.route('/add-person', methods=['GET'])
 def add_person():
     prev_url = request.referrer
-    return render_template('add_person.html', prev_url=prev_url)
+    return render_template('user/add_person.html', prev_url=prev_url)
 
 
 # login required decorator

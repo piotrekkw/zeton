@@ -7,3 +7,7 @@ _config.yml
 # database should not be stored in the repo
 db.sqlite
 node_modules/
+.coverage
+tests/TODO.txt
+
+style.css.map
